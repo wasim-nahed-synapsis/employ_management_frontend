@@ -6,11 +6,13 @@ export default function ViewEmployeeModal({ open, onClose, employee }) {
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50">
-      <div className="bg-gradient-to-br from-sky-100 via-blue-100 to-yellow-100 w-full max-w-2xl h-auto rounded shadow-lg overflow-hidden">
+      <div className="bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-300
+ w-full max-w-2xl h-auto rounded shadow-lg overflow-hidden">
         
         {/* Header with sky bg and black ❌ */}
-        <div className="flex justify-between items-center px-6 py-4 border-b bg-sky-300 relative">
-          <h2 className="text-lg font-semibold text-center w-full text-white">
+        <div className="flex justify-between items-center px-6 py-4 border-b bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-300
+ relative">
+          <h2 className="text-lg font-semibold text-center w-full text-Black">
             Employee Details
           </h2>
           <button

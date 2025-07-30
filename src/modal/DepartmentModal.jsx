@@ -23,7 +23,8 @@ const DepartmentModal = ({ open, onClose, onSubmit, editData }) => {
 
   return (
     <div className="fixed inset-0 bg-opacity-30 flex items-center justify-center">
-      <div className="bg-white p-6 rounded shadow-lg w-96">
+      <div className="bg-white bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-300
+ p-6 rounded shadow-lg w-96">
         <h2 className="text-lg font-bold mb-4">{editData ? 'Edit' : 'Add New'} Department</h2>
         <input
           type="text"
@@ -39,7 +40,7 @@ const DepartmentModal = ({ open, onClose, onSubmit, editData }) => {
           className="w-full border p-2 mb-4 rounded"
         />
         <div className="flex justify-end space-x-2">
-          <button onClick={onClose} className="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+          <button onClick={onClose} className="bg-green-600 text-white px-4 py-2 rounded">Cancel</button>
           <button onClick={handleSubmit} className="bg-green-600 text-white px-4 py-2 rounded">
             {editData ? 'Update' : 'Add'}
           </button>

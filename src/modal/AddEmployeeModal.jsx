@@ -77,7 +77,8 @@ export default function AddEmployeeModal({ open, onClose, onCreated, employee })
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50">
-      <div className="w-full max-w-3xl bg-white rounded shadow-lg">
+      <div className="w-full max-w-3xl bg-white rounded shadow-lg bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-300
+">
         <div className="flex justify-between items-center px-5 py-3 border-b">
           <h3 className="text-lg font-semibold">{isEdit ? "Edit Employee" : "Add Employee"}</h3>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700">✕</button>

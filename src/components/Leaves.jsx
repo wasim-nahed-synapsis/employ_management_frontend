@@ -48,17 +48,22 @@ const Leaves = () => {
 
   const handleStatusUpdate = async (id, status) => {
     try {
-      await fetch(`${API_URL}/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status }),
+      const endpoint =
+        status === 'approved'
+          ? `${API_URL}/${id}/approve`
+          : `${API_URL}/${id}/reject`;
+
+      await fetch(endpoint, {
+        method: 'PUT',
       });
+
       setSelectedLeave(null);
       fetchLeaves(); // Refresh data
     } catch (error) {
       console.error('Status update failed', error);
     }
   };
+
 
   return (
     <div className="p-6 min-h-screen bg-gray-100">
@@ -166,8 +171,8 @@ const Leaves = () => {
 
       {/* Modal */}
       {selectedLeave && (
-        <div className="fixed inset-0 bg-opacity-30 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded w-[400px]">
+        <div className="fixed inset-0 bg-opacity-30 flex items-center justify-center z-50 ">
+          <div className="bg-white p-6 rounded w-[400px] bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-300">
             <h3 className="text-lg font-bold mb-4 text-center">Leave Details</h3>
             <div className="flex justify-center mb-4">
               <img
@@ -184,22 +189,26 @@ const Leaves = () => {
             <p><strong>Start Date:</strong> {selectedLeave.fromDate?.split('T')[0]}</p>
             <p><strong>End Date:</strong> {selectedLeave.toDate?.split('T')[0]}</p>
 
-            <div className="mt-4 flex justify-between">
-              <button
-                onClick={() => handleStatusUpdate(selectedLeave._id, 'approved')}
-                className="bg-green-600 text-white px-4 py-1 rounded"
-              >
-                Accept
-              </button>
-              <button
-                onClick={() => handleStatusUpdate(selectedLeave._id, 'rejected')}
-                className="bg-red-600 text-white px-4 py-1 rounded"
-              >
-                Reject
-              </button>
+            <div className="mt-4 flex justify-between ">
+              {selectedLeave.status !== 'rejected' && (
+                <div className="flex gap-2 mt-4">
+                  <button
+                    onClick={() => handleStatusUpdate(selectedLeave._id, 'approved')}
+                    className="bg-green-600 text-white px-4 py-1 rounded"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleStatusUpdate(selectedLeave._id, 'rejected')}
+                    className="bg-red-600 text-white px-4 py-1 rounded"
+                  >
+                    Reject
+                  </button>
+                </div>
+              )}
               <button
                 onClick={() => setSelectedLeave(null)}
-                className="ml-auto text-gray-600 underline"
+                className="ml-auto text-black underline "
               >
                 Close
               </button>
