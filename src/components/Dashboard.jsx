@@ -9,6 +9,8 @@ import {
   FaHourglassHalf,
   FaTimesCircle,
 } from "react-icons/fa";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+
 
 const Dashboard = () => {
   const [employeeCount, setEmployeeCount] = useState(0);
@@ -159,6 +161,33 @@ const Dashboard = () => {
           </div>
           <p className="text-2xl font-bold">{rejectedLeaveCount}</p>
         </div>
+      </div>
+      {/* Leave Stats Pie Chart */}
+      <h3 className="text-xl font-semibold mt-8 mb-3">Leave Summary Chart</h3>
+      <div className="flex justify-center bg-white p-6 rounded shadow">
+        <PieChart width={400} height={300}>
+          <Pie
+            data={[
+              { name: "Applied", value: leaveAppliedCount },
+              { name: "Approved", value: approvedLeaveCount },
+              { name: "Pending", value: pendingLeaveCount },
+              { name: "Rejected", value: rejectedLeaveCount },
+            ]}
+            cx="50%"
+            cy="50%"
+            label
+            outerRadius={100}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            <Cell fill="#6366F1" /> 
+            <Cell fill="#10B981" /> 
+            <Cell fill="#F59E0B" /> 
+            <Cell fill="#EF4444" /> 
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
       </div>
     </div>
   );
