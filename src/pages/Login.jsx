@@ -2,14 +2,29 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@example.com");
+  const [password, setPassword] = useState("admin123");
   const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // ✅ Static Admin Login Check
+    if (email === "admin@example.com" && password === "admin123") {
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("username", "Admin User");
+      localStorage.setItem("userRole", "admin");
+
+      if (remember) {
+        localStorage.setItem("rememberMe", "true");
+      }
+
+      navigate("/dashboard");
+      return;
+    }
+
+    // ✅ If not admin, send to backend
     try {
       const res = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
@@ -24,6 +39,7 @@ const Login = () => {
       if (res.ok) {
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("username", `${data.user.firstName} ${data.user.lastName}`);
+        localStorage.setItem("userRole", data.user.role || "user");
 
         if (remember) {
           localStorage.setItem("rememberMe", "true");
@@ -45,10 +61,7 @@ const Login = () => {
         Employee Management System
       </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow-md w-96"
-      >
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl mb-6 text-center font-bold">Login Page</h2>
 
         <div className="mb-4">
@@ -58,7 +71,6 @@ const Login = () => {
             className="w-full border border-gray-300 p-2 rounded"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="admin@example.com"
             required
           />
         </div>
@@ -70,7 +82,6 @@ const Login = () => {
             className="w-full border border-gray-300 p-2 rounded"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="admin123"
             required
           />
         </div>
